@@ -415,8 +415,8 @@ Rcpp::List MNR(const arma::mat & Y, const Rcpp::List & X,
           V = V + (D*(tolparinv*100));
           arma::inv_sympd(Vi,V);
           if(Vi.n_rows == 0){ // finally, if fails try to invert with diag(1e-3)
-            Rcpp::Rcout << "Sistem is singular (V). Stopping the job. Try a bigger number of tolparinv." << arma::endl;
-            return 0;
+            //Rcpp::Rcout << "Sistem is singular (V). Stopping the job. Try a bigger number of tolparinv." << arma::endl;
+            return "Sistem is singular (V). Stopping the job. Try a bigger number of tolparinv.";
           }
         }
       }
@@ -447,8 +447,8 @@ Rcpp::List MNR(const arma::mat & Y, const Rcpp::List & X,
         if(tXVXVX.n_rows == 0){ // if fails try to invert with diag(1e-4)
           arma::solve(tXVXVX,tXVX + (D*(tolparinv*100)),VX.t());
           if(tXVXVX.n_rows == 0){ // finally stop
-            Rcpp::Rcout << "Sistem is singular (tXVXVX). Aborting the job. Try a bigger number of tolparinv." << arma::endl;
-            return 0;
+            //Rcpp::Rcout << "Sistem is singular (tXVXVX). Aborting the job. Try a bigger number of tolparinv." << arma::endl;
+            return "Sistem is singular (tXVXVX). Aborting the job. Try a bigger number of tolparinv.";
           }
         }
       }
@@ -534,8 +534,8 @@ Rcpp::List MNR(const arma::mat & Y, const Rcpp::List & X,
       A_svd = arma::pinv(A, 1.490116e-08); // Inverse of Fishers
       
       if(A_svd.n_rows == 0){ // if fails 
-        Rcpp::Rcout << "Sistem is singular (A_svd). Aborting the job. Try a bigger number of tolparinv." << arma::endl;
-        return 0;
+        //Rcpp::Rcout << "Sistem is singular (A_svd). Aborting the job. Try a bigger number of tolparinv." << arma::endl;
+        return "Sistem is singular (A_svd). Aborting the job. Try a bigger number of tolparinv.";
       }
       
       // F- * sigma(k) * dL/ds
@@ -560,8 +560,8 @@ Rcpp::List MNR(const arma::mat & Y, const Rcpp::List & X,
         arma::mat Ac = A.submat(no_restrain,no_restrain); // subset of A
         arma::mat Ac_svd = arma::inv(Ac); // Inverse of Fishers (subset of A)
         if(Ac_svd.n_rows == 0){ // if fails 
-          Rcpp::Rcout << "Sistem is singular (Ac_svd). Stopping the job. Try a bigger number of tolparinv." << arma::endl;
-          return 0;
+          //Rcpp::Rcout << "Sistem is singular (Ac_svd). Stopping the job. Try a bigger number of tolparinv." << arma::endl;
+          return "Sistem is singular (Ac_svd). Stopping the job. Try a bigger number of tolparinv.";
         }
         arma::vec wwc = ww(no_restrain); // subset of ww
         arma::vec newc_wwc = Ac_svd * wwc; //update variance components
@@ -623,8 +623,8 @@ Rcpp::List MNR(const arma::mat & Y, const Rcpp::List & X,
         arma::mat FI_c = FI / (sp * sp.t());
         sigma_cov = pinv(FI_c);
         if(sigma_cov.n_rows == 0){ // if fails 
-          Rcpp::Rcout << "System is singular (sigma_cov). Aborting the job." << arma::endl;
-          return 0;
+          //Rcpp::Rcout << "System is singular (sigma_cov). Aborting the job." << arma::endl;
+          return "System is singular (sigma_cov). Aborting the job.";
         }
       }
       
@@ -636,8 +636,8 @@ Rcpp::List MNR(const arma::mat & Y, const Rcpp::List & X,
         if(tXVXi.n_rows == 0){// if fails try to invert with diag(1e-5)
           arma::inv(tXVXi,tXVX+(D*(tolparinv*10)));
           if(tXVXi.n_rows == 0){
-            Rcpp::Rcout << "System is singular (tXVXi). Aborting the job. Try a bigger number of tolparinv." << arma::endl;
-            return 0;
+            //Rcpp::Rcout << "System is singular (tXVXi). Aborting the job. Try a bigger number of tolparinv." << arma::endl;
+            return "System is singular (tXVXi). Aborting the job. Try a bigger number of tolparinv.";
           }
         }
       }
