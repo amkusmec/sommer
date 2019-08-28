@@ -416,7 +416,7 @@ Rcpp::List MNR(const arma::mat & Y, const Rcpp::List & X,
           arma::inv_sympd(Vi,V);
           if(Vi.n_rows == 0){ // finally, if fails try to invert with diag(1e-3)
             //Rcpp::Rcout << "Sistem is singular (V). Stopping the job. Try a bigger number of tolparinv." << arma::endl;
-            return "Sistem is singular (V). Stopping the job. Try a bigger number of tolparinv.";
+            return Rcpp::List::create(Rcpp::Named("Error") = "Sistem is singular (V). Stopping the job. Try a bigger number of tolparinv.");
           }
         }
       }
